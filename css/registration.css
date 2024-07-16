@@ -1,0 +1,147 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    --background-color: #000;
+    --pure-background: #000;
+    --color: #fff;
+    --scroll-color: #a3a3a3;
+    font-size: 16px;
+
+    /* scroll bar on X-axis */
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: var(--pure-background);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--scroll-color);
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--box-color);
+}
+
+/* ======== applied to all anchor tags ======== */
+a {
+    color: #000;
+    text-decoration: none;
+}
+
+/* =============== end ============= */
+
+main {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* background: url(../images/image2.jpg); */
+    background: url(../assets/images/image2.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#login-section {
+    width: 70vw;
+    height: 80vh;
+    /* background-color: rgb(255, 255, 255); */
+
+    border-radius: 10px;
+    border: 5px solid rgb(0, 0, 0);
+
+    display: flex;
+
+    backdrop-filter: blur(10px);
+}
+
+#login-section>div {
+    width: 50%;
+}
+
+#login-section>.login-illustration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-section img {
+    width: 80%;
+}
+
+.login-form {
+    padding: 5%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    gap: 30px;
+}
+
+.title {
+    font-size: 50px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+form>div {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    height: 40px;
+    padding: 5px 10px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid blue;
+    background-color: transparent;
+}
+
+input[type='submit'] {
+    background-color: blue;
+    color: white;
+    font-size: 25px;
+    font-weight: 600;
+    cursor: pointer;
+
+    box-shadow: 0 0.3rem 1rem #535252;
+}
+
+.return-page {
+    position: absolute;
+    top: 30px;
+    left: 50px;
+
+    background-color: #f0f0f0;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+}
