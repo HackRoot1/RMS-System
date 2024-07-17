@@ -41,7 +41,7 @@ $fetch_food_data_num_rows = mysqli_num_rows($fetch_food_data);
             <div class="box">
                 <a href="./us_food.php?s_item=<?= $foodItem['id'] ?>">
                     <div class="box-img">
-                        <img src="../assets/images/burger.png" alt="Food Image">
+                        <img src="../assets/images/<?= $foodItem['primary_img'] ?>" alt="Food Image">
                         <?php if ($foodItem['discount_percentage'] > 0) : ?>
                             <div class="discount"> <?= $foodItem['discount_percentage'] . "% Off" ?> </div>
                         <?php endif; ?>

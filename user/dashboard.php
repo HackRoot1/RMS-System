@@ -6,7 +6,7 @@ $get_user_data_query = "SELECT * FROM users_data WHERE email = '{$_SESSION['emai
 $get_user_data = mysqli_query($conn, $get_user_data_query) or die("User Not available");
 $user_data = mysqli_fetch_assoc($get_user_data);
 
-$category_query = "SELECT DISTINCT(food_category) FROM foodItems";
+$category_query = "SELECT DISTINCT(food_category), primary_img FROM foodItems";
 $category_data = mysqli_query($conn, $category_query);
 
 
@@ -76,12 +76,12 @@ include("./header.php");
         <div class="title">Inspiration for your first order</div>
         <div class="boxes">
 
-            <?php while ($data = mysqli_fetch_assoc($category_data)) : ?>
-                <div class="box">
-                    <img src="../assets/images/food2.png" alt="Food Category">
-                    <div class="food-name"><?= $data['food_category']; ?></div>
-                </div>
-            <?php endwhile; ?>
+                <?php while ($data = mysqli_fetch_assoc($category_data)) : ?>
+                    <div class="box">
+                        <img src="../assets/images/food2.png" alt="Food Category">
+                        <div class="food-name"><?= $data['food_category']; ?></div>
+                    </div>
+                <?php endwhile; ?>
 
         </div>
     </section>

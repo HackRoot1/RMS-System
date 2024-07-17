@@ -395,12 +395,12 @@ main .menu-list .boxes .box :is(.details, .box-title) {
 .best-categories .boxes .box {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     min-width: 200px;
     gap: 10px;
-    padding: 20px;
-    margin: 20px 0;
+    padding: 10px 20px;
+    margin: 10px 0;
     /* background-color: #ba42ba; */
     font-size: 20px;
     color: black;
@@ -415,8 +415,14 @@ main .menu-list .boxes .box :is(.details, .box-title) {
 
 .best-categories .boxes .box img {
     width: 100%;
+    height: 80%;
+    object-fit: cover;
     border-radius: 50%;
     /* border: 2px solid red; */
+}
+
+.best-categories .boxes .box .food-name {
+    height: 20%;
 }
 
 footer {
