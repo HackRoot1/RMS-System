@@ -78,7 +78,7 @@ include("./header.php");
 
                 <?php while ($data = mysqli_fetch_assoc($category_data)) : ?>
                     <div class="box">
-                        <img src="../assets/images/food2.png" alt="Food Category">
+                        <img src="../assets/images/<?= $data['primary_img']; ?>" alt="Food Category">
                         <div class="food-name"><?= $data['food_category']; ?></div>
                     </div>
                 <?php endwhile; ?>
