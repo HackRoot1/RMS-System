@@ -219,6 +219,12 @@ main .menu-list .boxes .box .box-img {
     justify-content: center;
     align-items: center;
     position: relative;
+    height: 250px;
+    background-color: #f0f0f0;
+}
+
+main .menu-list .boxes .box:hover .box-img {
+    border-radius: 10px 10px 0 0;
 }
 
 main .menu-list .boxes .box .box-img img {
