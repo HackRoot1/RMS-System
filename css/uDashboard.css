@@ -388,6 +388,8 @@ main .menu-list .boxes .box :is(.details, .box-title) {
     /* background-color: #534f53; */
     gap: 20px;
     overflow-y: hidden;
+    scroll-snap-align: center;
+    scroll-snap-type: x mandatory;
 }
 
 .best-categories .boxes .box {
@@ -403,6 +405,7 @@ main .menu-list .boxes .box :is(.details, .box-title) {
     font-size: 20px;
     color: black;
     cursor: pointer;
+    scroll-snap-align: center;
 }
 
 .best-categories .boxes .box.active {
