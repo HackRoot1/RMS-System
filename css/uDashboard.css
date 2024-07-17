@@ -180,7 +180,7 @@ main .menu-list {
 main .menu-list .boxes {
     margin: 50px 0;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(18rem, 100%), 1fr));
+    grid-template-columns: repeat(3, minmax(min(18rem, 100%), 1fr));
     gap: 2.5rem;
 }
 
@@ -238,9 +238,10 @@ main .menu-list .boxes .box .box-img .discount {
     border-radius: 0 5px 5px 0;
 }
 
-main .menu-list .boxes .box :is(.details, .price, .box-title) {
+main .menu-list .boxes .box :is(.details, .box-title) {
     padding: 10px 10px;
 }
+
 /* ================= end ==================== */
 
 .box-title,
@@ -248,8 +249,12 @@ main .menu-list .boxes .box :is(.details, .price, .box-title) {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 10px;
 }
 
+.details > span:first-child {
+    width: 70%;
+}
 .box-title .title {
     font-size: 20px;
     font-weight: 600;
@@ -383,6 +388,8 @@ main .menu-list .boxes .box :is(.details, .price, .box-title) {
     /* background-color: #534f53; */
     gap: 20px;
     overflow-y: hidden;
+    scroll-snap-align: center;
+    scroll-snap-type: x mandatory;
 }
 
 .best-categories .boxes .box {
@@ -398,6 +405,7 @@ main .menu-list .boxes .box :is(.details, .price, .box-title) {
     font-size: 20px;
     color: black;
     cursor: pointer;
+    scroll-snap-align: center;
 }
 
 .best-categories .boxes .box.active {

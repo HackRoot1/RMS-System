@@ -16,203 +16,206 @@ include("./header.php");
 ?>
 
 
-    <main>
+<main>
 
 
-        <section class="categories">
-            <a href="./table_reservation.php">
-                <div>
-                    <span class="icon">
-                        <i class="fa-solid fa-utensils"></i>
-                    </span>
-                    <span>
-                        Book Table
-                    </span>
-                </div>
-            </a>
-
-            <a href="#">
-                <div class="active">
-                    <span class="icon">
-                        <i class="fa-solid fa-utensils"></i>
-                    </span>
-                    <span>
-                        Delivery
-                    </span>
-                </div>
-            </a>
-
-            <a href="#">
-                <div>
-                    <span class="icon">
-                        <i class="fa-solid fa-utensils"></i>
-                    </span>
-                    <span>
-                        Nightlife
-                    </span>
-                </div>
-            </a>
-
-        </section>
-
-        <hr>
-
-        <section class="filters">
-
-            <!-- applied filter and their count -->
-            <div class="filter-status">
-                <span class="count">0</span>
+    <section class="categories">
+        <a href="./table_reservation.php">
+            <div>
+                <span class="icon">
+                    <i class="fa-solid fa-utensils"></i>
+                </span>
                 <span>
-                    Filters
+                    Book Table
                 </span>
             </div>
+        </a>
 
-            <div class="filter-list"></div>
+        <a href="#">
+            <div class="active">
+                <span class="icon">
+                    <i class="fa-solid fa-utensils"></i>
+                </span>
+                <span>
+                    Delivery
+                </span>
+            </div>
+        </a>
 
-        </section>
+        <a href="#">
+            <div>
+                <span class="icon">
+                    <i class="fa-solid fa-utensils"></i>
+                </span>
+                <span>
+                    Nightlife
+                </span>
+            </div>
+        </a>
+
+    </section>
+
+    <hr>
+
+    <section class="filters">
+
+        <!-- applied filter and their count -->
+        <div class="filter-status">
+            <span class="count">0</span>
+            <span>
+                Filters
+            </span>
+        </div>
+
+        <div class="filter-list"></div>
+
+    </section>
 
 
-        <section class="best-categories">
-            <div class="title">Inspiration for your first order</div>
-            <div class="boxes">
+    <section class="best-categories">
+        <div class="title">Inspiration for your first order</div>
+        <div class="boxes">
 
                 <?php while ($data = mysqli_fetch_assoc($category_data)) : ?>
                     <div class="box">
-                        <img src="../assets/images/<?= $data['primary_img']; ?>" alt="Food Category">
+                        <img src="../assets/images/food2.png" alt="Food Category">
                         <div class="food-name"><?= $data['food_category']; ?></div>
                     </div>
                 <?php endwhile; ?>
 
-            </div>
-        </section>
+        </div>
+    </section>
 
 
-        <section class="menu-list">
-            <div class="title">
-                Get Your Loved Food
-            </div>
+    <section class="menu-list">
+        <div class="title">
+            Get Your Loved Food
+        </div>
 
-            <div class="result-ajax-data">
+        <div class="result-ajax-data">
 
-            </div>
+        </div>
 
-        </section>
+    </section>
 
-    </main>
+</main>
 
 
-    <script>
-        $(document).ready(function() {
+<script>
+    $(document).ready(function() {
 
-            // fetch all data by default
-            function loadData(obj) {
-                $.ajax({
-                    url: "load_dynamic_data.php",
-                    type: "POST",
-                    data: obj,
-                    success: function(data) {
-                        if (data) {
-                            $(".load-more").remove();
-                            $(".result-ajax-data").append(data);
-                        } else {
-                            $("#load-more").html("Finished");
-                            $("#load-more").prop("disabled", true);
-                        }
-                    },
-                });
+        // fetch all data by default
+        function loadData(obj) {
+            $.ajax({
+                url: "load_dynamic_data.php",
+                type: "POST",
+                data: obj,
+                success: function(data) {
+                    if (data) {
+                        $(".load-more").remove();
+                        $(".result-ajax-data").append(data);
+                    } else {
+                        $("#load-more").html("Finished");
+                        $("#load-more").prop("disabled", true);
+                    }
+                },
+            });
+        }
+
+        // fetching first time 
+        loadData();
+
+        // function to check how many filters applied
+        function checkFilters() {
+            let appliedFilters = document.querySelectorAll(".applied-filter");
+
+            let count = appliedFilters.length;
+            document.querySelector(".count").innerHTML = count;
+
+            let objFilter = []
+
+            appliedFilters.forEach((element, index) => {
+                let name = element.children[0].innerText;
+                objFilter = [
+                    ...objFilter,
+                    name,
+                ]
+            });
+
+            return objFilter;
+        }
+
+
+        $(document).on("click", "#load-more", function() {
+            $("#load-more").html("Loading...");
+            var page_id = $(this).data("id");
+
+            let obj = {
+                page_no: page_id
             }
 
-            // fetching first time 
-            loadData();
+            filterData = checkFilters();
 
-            // function to check how many filters applied
-            function checkFilters() {
-                let appliedFilters = document.querySelectorAll(".applied-filter");
-
-                let count = appliedFilters.length;
-                document.querySelector(".count").innerHTML = count;
-
-                let objFilter = []
-
-                appliedFilters.forEach((element, index) => {
-                    let name = element.children[0].innerText;
-                    objFilter = [
-                        ...objFilter,
-                        name,
-                    ]
-                });
-
-                return objFilter;
+            if (filterData != "") {
+                $(".result-ajax-data").empty();
+                obj = {
+                    ...obj,
+                    filter: filterData
+                }
             }
 
-
-            $(document).on("click", "#load-more", function() {
-                $("#load-more").html("Loading...");
-                var page_id = $(this).data("id");
-
-                let obj = {
-                    page_no: page_id
-                }
-
-                filterData = checkFilters();
-
-                if (filterData != "") {
-                    $(".result-ajax-data").empty();
-                    obj = {
-                        ...obj,
-                        filter: filterData
-                    }
-                }
-
-                loadData(obj);
-            });
-
-
-            $(document).on("click", ".box", function() {
-                let filter = $(this).children(".food-name").text();
-
-                $(".filter-list").append(`<div class="applied-filter"><span class = "name">${filter}</span><span class = "close">X</span></div>`);
-                $(this).addClass("active");
-
-
-                filterData = checkFilters();
-
-                $(".result-ajax-data").empty();
-                let obj = {
-                    filter: filterData
-                }
-                loadData(obj);
-            });
-
-
-            $(document).on("click", ".applied-filter .close", function() {
-                
-                // console.log($(this).siblings(".name").html());
-                let filterName = $(this).siblings(".name").html();
-                
-                let searchFilter = document.querySelectorAll(".box.active");
-
-                searchFilter.forEach((element, index) => {
-                    let name = element.children[1].innerText;
-                    console.log(name);
-                    if(name == filterName) {
-                        element.classList.remove("active")
-                    }
-                });
-
-
-                $(this).parent().remove();
-
-                filterData = checkFilters();
-
-                $(".result-ajax-data").empty();
-                let obj = {
-                    filter: filterData
-                }
-                loadData(obj);
-            });
-
+            loadData(obj);
         });
-    </script>
+
+
+        $(document).on("click", ".box", function() {
+            let filter = $(this).children(".food-name").text();
+
+            let checkClick = $(this).hasClass("active");
+            if (checkClick) {
+                return;
+            }
+
+            $(".filter-list").append(`<div class="applied-filter"><span class = "name">${filter}</span><span class = "close">X</span></div>`);
+            $(this).addClass("active");
+
+
+            filterData = checkFilters();
+
+            $(".result-ajax-data").empty();
+            let obj = {
+                filter: filterData
+            }
+            loadData(obj);
+        });
+
+
+        $(document).on("click", ".applied-filter .close", function() {
+
+            let filterName = $(this).siblings(".name").html();
+
+            let searchFilter = document.querySelectorAll(".box.active");
+
+            searchFilter.forEach((element, index) => {
+                let name = element.children[1].innerText;
+                if (name == filterName) {
+                    element.classList.remove("active")
+                }
+            });
+
+
+            $(this).parent().remove();
+
+            filterData = checkFilters();
+
+            $(".result-ajax-data").empty();
+            let obj = {
+                filter: filterData
+            }
+            loadData(obj);
+        });
+
+    });
+</script>
 
 <?php include("./footer.php") ?>
