@@ -105,7 +105,7 @@ if (isset($_POST['book-table'])) {
     
 $css = "table_reservation";
 include("./header.php");
-
+include("../time.php");
 
 ?>
 
@@ -163,9 +163,9 @@ include("./header.php");
                                 <div>
                                     <select name="select-date" id="Date" placeholder="Select Date">
                                         <option value="one" disabled selected>Select Date</option>
-                                        <option value="2024/01/06">01/06/2024</option>
-                                        <option value="2024/02/06">02/06/2024</option>
-                                        <option value="2024/03/06">03/06/2024</option>
+                                        <option value="<?= $current_date ?>"><?= $current_date ?></option>
+                                        <option value="<?= $next_day ?>"><?= $next_day ?></option>
+                                        <option value="<?= $day_after_next ?>"><?= $day_after_next ?></option>
                                     </select>
 
                                     <select name="select-guests" id="guests">
