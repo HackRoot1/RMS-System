@@ -5,16 +5,6 @@ require("../session.php");
 $get_user_data_query = "SELECT * FROM users_data WHERE email = '{$_SESSION['email']}'";
 $get_user_data = mysqli_query($conn, $get_user_data_query) or die("User Not available");
 $user_data = mysqli_fetch_assoc($get_user_data);
-// print_r($user_data['username']);
-
-
-$fetch_food_data_query = "SELECT * FROM foodItems";
-$fetch_food_data = mysqli_query($conn, $fetch_food_data_query);
-
-
-$category_query = "SELECT DISTINCT(food_category) FROM foodItems";
-$category_data = mysqli_query($conn, $category_query);
-
 
 
 if (isset($_GET['t_id'])) {
@@ -28,7 +18,6 @@ if (isset($_GET['t_id'])) {
 
 
 // get tables info and compare with seats
-
 
 if (isset($_POST['book-table'])) {
 
