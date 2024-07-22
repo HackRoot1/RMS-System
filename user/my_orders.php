@@ -33,89 +33,94 @@ include("./header.php");
                 <table>
                     <thead>
                         <tr class="theading">
-                            <td>Image</td>
-                            <td>Description</td>
-                            <td>Quantity</td>
-                            <td>Price</td>
-                            <td>Total Price</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        <?php if(mysqli_num_rows($fetch_user_orders) > 0): ?>
+                            <?php while ($food_order = mysqli_fetch_assoc($fetch_user_orders)) : ?>
+                                <?php
+                                $ordered_food_query = "SELECT * FROM fooditems WHERE id = {$food_order['food_id']}";
+                                $ordered_food = mysqli_query($conn, $ordered_food_query);
+                                $ordered_food = mysqli_fetch_assoc($ordered_food);
 
-                        <?php while ($food_order = mysqli_fetch_assoc($fetch_user_orders)) : ?>
-                            <?php
-                            $ordered_food_query = "SELECT * FROM fooditems WHERE id = {$food_order['food_id']}";
-                            $ordered_food = mysqli_query($conn, $ordered_food_query);
-                            $ordered_food = mysqli_fetch_assoc($ordered_food);
+                                ?>
 
-                            ?>
-
-                            <tr>
-                                <td>
-                                    <div class="img">
-                                        <img src="../assets/images/food.png" alt="Food Image">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="info">
-                                        <div class="title"><?= $ordered_food['food_name'] ?></div>
-                                        <div class="description"><?= $ordered_food['food_description'] ?></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="quantity">
-                                        <span><?= $food_order['quantity'] ?></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= $food_order['total_price'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= ($food_order['quantity'] * $food_order['total_price']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="status">
-                                        <?php if (!$food_order['order_cancelled']) : ?>
-                                            <div class="<?= $food_order['status'] ? 'ordered' : 'cancelled' ?>">
-                                                <?php echo $food_order['status'] == 1 ? "Order Placed" : "Pending" ?>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="cancelled">
-                                                Order Cancelled
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="buy">
-                                        <?php if (!$food_order['order_cancelled']) : ?>
-                                            <div class="buy-edit">
-                                                <span class="cancel-item" data-foodid=<?= $food_order['id'] ?>>Cancel</span>
-                                                <span>
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <img src="../assets/images/food.png" alt="Food Image">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="info">
+                                            <div class="title"><?= $ordered_food['food_name'] ?></div>
+                                            <div class="description"><?= $ordered_food['food_description'] ?></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="quantity">
+                                            <span><?= $food_order['quantity'] ?></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= $food_order['total_price'] ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= ($food_order['quantity'] * $food_order['total_price']) ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="status">
+                                            <?php if (!$food_order['order_cancelled']) : ?>
+                                                <div class="<?= $food_order['status'] ? 'ordered' : 'cancelled' ?>">
+                                                    <?php echo $food_order['status'] == 1 ? "Order Placed" : "Pending" ?>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="cancelled">
+                                                    Order Cancelled
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="buy">
+                                            <?php if (!$food_order['order_cancelled']) : ?>
+                                                <div class="buy-edit">
+                                                    <span class="cancel-item" data-foodid=<?= $food_order['id'] ?>>Cancel</span>
+                                                    <span>
+                                                        <a href="./checkout.php?order_id=<?= $food_order['food_id'] ?>">
+                                                            Edit
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="buy-return">
                                                     <a href="./checkout.php?order_id=<?= $food_order['food_id'] ?>">
-                                                        Edit
+                                                        Buy Return
                                                     </a>
-                                                </span>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="buy-return">
-                                                <a href="./checkout.php?order_id=<?= $food_order['food_id'] ?>">
-                                                    Buy Return
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                            </tr>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                </tr>
 
-                        <?php endwhile; ?>
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan = "7" style = "text-align: center">No Records Found</td>
+                            </tr>
+                        <?php endif; ?>
 
                     </tbody>
 
@@ -135,90 +140,94 @@ include("./header.php");
                 <table>
                     <thead>
                         <tr class="theading">
-                            <td>Image</td>
-                            <td>Description</td>
-                            <td>Quantity</td>
-                            <td>Price</td>
-                            <td>Total Price</td>
-                            <td>Status</td>
-                            <td>Action</td>
+                            <th>Image</th>
+                            <th>Description</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
+                        <?php if(mysqli_num_rows($fetch_user_orders_history) > 0): ?>
+                            <?php while ($food_order_history = mysqli_fetch_assoc($fetch_user_orders_history)) : ?>
+                                <?php
+                                $ordered_food_history_query = "SELECT * FROM fooditems WHERE id = {$food_order_history['food_id']}";
+                                $ordered_food_history = mysqli_query($conn, $ordered_food_history_query);
+                                $ordered_food_history = mysqli_fetch_assoc($ordered_food_history);
 
-                        <?php while ($food_order_history = mysqli_fetch_assoc($fetch_user_orders_history)) : ?>
-                            <?php
-                            $ordered_food_history_query = "SELECT * FROM fooditems WHERE id = {$food_order_history['food_id']}";
-                            $ordered_food_history = mysqli_query($conn, $ordered_food_history_query);
-                            $ordered_food_history = mysqli_fetch_assoc($ordered_food_history);
+                                ?>
 
-                            ?>
-
-                            <tr>
-                                <td>
-                                    <div class="img">
-                                        <img src="../assets/images/food.png" alt="Food Image">
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="info">
-                                        <div class="title"><?= $ordered_food_history['food_name'] ?></div>
-                                        <div class="description"><?= $ordered_food_history['food_description'] ?></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="quantity">
-                                        <span><?= $food_order_history['quantity'] ?></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= $food_order_history['total_price'] ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= ($food_order_history['quantity'] * $food_order_history['total_price']) ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="status">
-                                        <?php if (!$food_order_history['order_cancelled']) : ?>
-                                            <div class="<?= $food_order_history['status'] ? 'ordered' : 'cancelled' ?>">
-                                                <?php echo $food_order_history['status'] == 1 ? "Order Placed" : "Pending" ?>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="cancelled">
-                                                Order Cancelled
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="buy">
-                                        <?php if (!$food_order_history['order_cancelled']) : ?>
-                                            <div class="buy-edit">
-                                                <span class="cancel-item" data-foodid=<?= $food_order_history['id'] ?>>Cancel</span>
-                                                <span>
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <img src="../assets/images/food.png" alt="Food Image">
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="info">
+                                            <div class="title"><?= $ordered_food_history['food_name'] ?></div>
+                                            <div class="description"><?= $ordered_food_history['food_description'] ?></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="quantity">
+                                            <span><?= $food_order_history['quantity'] ?></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= $food_order_history['total_price'] ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= ($food_order_history['quantity'] * $food_order_history['total_price']) ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="status">
+                                            <?php if (!$food_order_history['order_cancelled']) : ?>
+                                                <div class="<?= $food_order_history['status'] ? 'ordered' : 'cancelled' ?>">
+                                                    <?php echo $food_order_history['status'] == 1 ? "Order Placed" : "Pending" ?>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="cancelled">
+                                                    Order Cancelled
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="buy">
+                                            <?php if (!$food_order_history['order_cancelled']) : ?>
+                                                <div class="buy-edit">
+                                                    <span class="cancel-item" data-foodid=<?= $food_order_history['id'] ?>>Cancel</span>
+                                                    <span>
+                                                        <a href="./checkout.php?order_id=<?= $food_order_history['food_id'] ?>">
+                                                            Edit
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="buy-return">
                                                     <a href="./checkout.php?order_id=<?= $food_order_history['food_id'] ?>">
-                                                        Edit
+                                                        Buy Return
                                                     </a>
-                                                </span>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="buy-return">
-                                                <a href="./checkout.php?order_id=<?= $food_order_history['food_id'] ?>">
-                                                    Buy Return
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan = "7" style = "text-align: center">No Records Found</td>
                             </tr>
-
-                        <?php endwhile; ?>
-
+                        <?php endif; ?>
                     </tbody>
 
                 </table>
