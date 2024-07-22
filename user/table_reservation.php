@@ -15,82 +15,6 @@ if (isset($_GET['t_id'])) {
     $table_r_data = mysqli_fetch_assoc($table_r_data);
 }
 
-
-
-// get tables info and compare with seats
-
-if (isset($_POST['book-table'])) {
-
-    $res_guests = $_POST['select-guests'];
-    $firstName = $_POST['firstName'];
-    $lastName = $_POST['lastName'];
-    $email = $_POST['email'];
-    $contact_no = $_POST['contact_no'];
-    $request = $_POST['request'];
-
-    $rt_query = "SELECT table_id FROM table_reserved WHERE status = 0";
-    $rt_res = mysqli_query($conn, $rt_query) or die(mysqli_error($conn));
-    $rt = [];
-    while ($d = mysqli_fetch_assoc($rt_res)) {
-        array_push($rt, $d['table_id']);
-    }
-
-    $str = implode(", ", $rt);
-
-    $t_sql = "SELECT * FROM table_data WHERE seats >= {$res_guests} AND id NOT IN ({$str})";
-    $t_res = mysqli_query($conn, $t_sql);
-    $t_data = mysqli_fetch_assoc($t_res);
-
-
-    if ($_POST['book-table'] == "Book") {
-        $res_date = $_POST['select-date'];
-
-        $sql2 = "INSERT INTO 
-                        customer_guests_details
-                        (user_id, table_id, guests_count, first_name, last_name, email, contact_no, request)
-                    VALUES
-                    ('{$user_data['id']}', '{$t_data['id']}', '{$res_guests}', '{$firstName}', '{$lastName}', '{$email}', '{$contact_no}', '{$request}')";
-
-        $sql = "INSERT INTO 
-                        table_reserved
-                        (user_id, table_id, date)
-                    VALUES
-                        ({$user_data['id']}, {$t_data['id']}, '{$res_date}')";
-
-        if (mysqli_query($conn, $sql) && mysqli_query($conn, $sql2)) {
-            header("Location: table_reserved.php");
-            exit();
-        }
-    }
-
-    if ($_POST['book-table'] == "Update") {
-
-        $table_id = $_POST['table_id'];
-
-        $sql2 = "UPDATE 
-                        customer_guests_details
-                    SET
-                        guests_count = '{$res_guests}', 
-                        first_name = '{$firstName}', 
-                        last_name = '{$lastName}', 
-                        email = '{$email}', 
-                        contact_no = '{$contact_no}', 
-                        request = '{$request}'
-                    WHERE
-                        user_id = '{$user_data['id']}'
-                    AND
-                        table_id = '{$table_id}'
-                    ";
-
-        if (mysqli_query($conn, $sql2)) {
-            header("Location: table_reserved.php");
-            exit();
-        } else {
-            echo mysqli_error($conn);
-        }
-    }
-}
-
     
 $css = "table_reservation";
 include("./header.php");
@@ -145,19 +69,19 @@ include("./header.php");
                 <div class="title">Reserve Table</div>
 
                 <div class="table-reservation-form">
-                    <form action="<?= $_SERVER['PHP_SELF'] ?>" method="POST">
+                    <form action="./table_reservation_data.php" method="POST">
                         <div class="booking-details">
                             <div>
                                 <span>Please select your booking details</span>
                                 <div>
-                                    <select name="select-date" id="Date" placeholder="Select Date">
+                                    <select name="select_date" id="Date" placeholder="Select Date">
                                         <option value="one" disabled selected>Select Date</option>
                                         <option value="2024/01/06">01/06/2024</option>
                                         <option value="2024/02/06">02/06/2024</option>
                                         <option value="2024/03/06">03/06/2024</option>
                                     </select>
 
-                                    <select name="select-guests" id="guests">
+                                    <select name="select_guests" id="guests">
                                         <option value="one" disabled selected>Select Guests</option>
                                         <option value="1" <?= (isset($table_r_data['guests_count']) && $table_r_data['guests_count'] == '1') ? "selected" : "" ?>>1</option>
                                         <option value="2" <?= (isset($table_r_data['guests_count']) && $table_r_data['guests_count'] == '2') ? "selected" : "" ?>>2</option>
