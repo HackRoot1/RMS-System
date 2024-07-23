@@ -60,7 +60,7 @@ include("./header.php");
                             <tr>
                                 <td>
                                     <div class="img">
-                                        <img src="../assets/images/food.png" alt="Food Image">
+                                        <img src="../assets/images/<?= $foodData['primary_img'] ?>" alt="Food Image">
                                     </div>
                                 </td>
                                 <td>
