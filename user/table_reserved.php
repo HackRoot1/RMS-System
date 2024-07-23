@@ -43,74 +43,78 @@ include("./header.php");
 
 
                     <tbody>
+                        <?php if(mysqli_num_rows($fetch_user_reservation) > 0): ?>
+                            <?php while ($reservation = mysqli_fetch_assoc($fetch_user_reservation)) : ?>
+                                <?php
+                                $table_data_query = "SELECT * FROM table_data WHERE id = {$reservation['table_id']}";
+                                $table_data = mysqli_query($conn, $table_data_query);
+                                $table_data = mysqli_fetch_assoc($table_data);
 
-                        <?php while ($reservation = mysqli_fetch_assoc($fetch_user_reservation)) : ?>
-                            <?php
-                            $table_data_query = "SELECT * FROM table_data WHERE id = {$reservation['table_id']}";
-                            $table_data = mysqli_query($conn, $table_data_query);
-                            $table_data = mysqli_fetch_assoc($table_data);
+                                ?>
 
-                            ?>
+                                <tr>
+                                    <td>
+                                        <div class="info"><?= $table_data['table_no'] ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="info">
+                                            <div class="title"><?= $user_data['username'] ?></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="quantity">
+                                            <span><?= $table_data['seats'] ?></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= $reservation['date'] ?>
+                                        </div>
+                                    </td>
 
-                            <tr>
-                                <td>
-                                    <div class="info"><?= $table_data['table_no'] ?></div>
-                                </td>
-                                <td>
-                                    <div class="info">
-                                        <div class="title"><?= $user_data['username'] ?></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="quantity">
-                                        <span><?= $table_data['seats'] ?></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= $reservation['date'] ?>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div class="status">
+                                            <?php if (!$reservation['reservation_cancelled']) : ?>
+                                                <div class="<?= $reservation['status'] == 0 ? 'ordered' : 'cancelled' ?>">
+                                                    <?php echo $reservation['status'] == 0 ? "Table Booked" : "Pending" ?>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="cancelled">
+                                                    Reservation Cancelled
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
 
-                                <td>
-                                    <div class="status">
-                                        <?php if (!$reservation['reservation_cancelled']) : ?>
-                                            <div class="<?= $reservation['status'] == 0 ? 'ordered' : 'cancelled' ?>">
-                                                <?php echo $reservation['status'] == 0 ? "Table Booked" : "Pending" ?>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="cancelled">
-                                                Reservation Cancelled
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="buy">
-                                        <?php if (!$reservation['reservation_cancelled']) : ?>
-                                            <div class="buy-edit">
-                                                <span class="cancel-item" data-tableno=<?= $reservation['id'] ?>>Cancel</span>
-                                                <span>
+                                    <td>
+                                        <div class="buy">
+                                            <?php if (!$reservation['reservation_cancelled']) : ?>
+                                                <div class="buy-edit">
+                                                    <span class="cancel-item" data-tableno=<?= $reservation['id'] ?>>Cancel</span>
+                                                    <span>
+                                                        <a href="table_reservation.php?t_id=<?= $reservation['table_id'] ?>">
+                                                            Edit
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="buy-return">
                                                     <a href="table_reservation.php?t_id=<?= $reservation['table_id'] ?>">
-                                                        Edit
+                                                        Book Again
                                                     </a>
-                                                </span>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="buy-return">
-                                                <a href="table_reservation.php?t_id=<?= $reservation['table_id'] ?>">
-                                                    Book Again
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
 
+                                </tr>
+
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan = "7" style = "text-align: center">No Records Found</td>
                             </tr>
-
-                        <?php endwhile; ?>
-
+                        <?php endif; ?>
 
                     </tbody>
 
@@ -142,73 +146,78 @@ include("./header.php");
 
 
                     <tbody>
+                        <?php if(mysqli_num_rows($fetch_user_reservation_history) > 0): ?>
+                            <?php while ($reservation_history = mysqli_fetch_assoc($fetch_user_reservation_history)) : ?>
+                                <?php
+                                $table_data_history_query = "SELECT * FROM table_data WHERE id = {$reservation_history['table_id']}";
+                                $table_data_history = mysqli_query($conn, $table_data_history_query);
+                                $table_data_history = mysqli_fetch_assoc($table_data_history);
 
-                        <?php while ($reservation_history = mysqli_fetch_assoc($fetch_user_reservation_history)) : ?>
-                            <?php
-                            $table_data_history_query = "SELECT * FROM table_data WHERE id = {$reservation_history['table_id']}";
-                            $table_data_history = mysqli_query($conn, $table_data_history_query);
-                            $table_data_history = mysqli_fetch_assoc($table_data_history);
+                                ?>
 
-                            ?>
+                                <tr>
+                                    <td>
+                                        <div class="info"><?= $table_data_history['table_no'] ?></div>
+                                    </td>
+                                    <td>
+                                        <div class="info">
+                                            <div class="title"><?= $user_data['username'] ?></div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="quantity">
+                                            <span><?= $table_data_history['seats'] ?></span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="price">
+                                            <?= $reservation_history['date'] ?>
+                                        </div>
+                                    </td>
 
-                            <tr>
-                                <td>
-                                    <div class="info"><?= $table_data_history['table_no'] ?></div>
-                                </td>
-                                <td>
-                                    <div class="info">
-                                        <div class="title"><?= $user_data['username'] ?></div>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="quantity">
-                                        <span><?= $table_data_history['seats'] ?></span>
-                                    </div>
-                                </td>
-                                <td>
-                                    <div class="price">
-                                        <?= $reservation_history['date'] ?>
-                                    </div>
-                                </td>
+                                    <td>
+                                        <div class="status">
+                                            <?php if (!$reservation_history['reservation_cancelled']) : ?>
+                                                <div class="<?= $reservation_history['status'] == 0 ? 'ordered' : 'cancelled' ?>">
+                                                    <?php echo $reservation_history['status'] == 0 ? "Table Booked" : "Pending" ?>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="cancelled">
+                                                    Reservation Cancelled
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
 
-                                <td>
-                                    <div class="status">
-                                        <?php if (!$reservation_history['reservation_cancelled']) : ?>
-                                            <div class="<?= $reservation_history['status'] == 0 ? 'ordered' : 'cancelled' ?>">
-                                                <?php echo $reservation_history['status'] == 0 ? "Table Booked" : "Pending" ?>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="cancelled">
-                                                Reservation Cancelled
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
-
-                                <td>
-                                    <div class="buy">
-                                        <?php if (!$reservation_history['reservation_cancelled']) : ?>
-                                            <div class="buy-edit">
-                                                <span class="cancel-item" data-tableno=<?= $reservation_history['id'] ?>>Cancel</span>
-                                                <span>
+                                    <td>
+                                        <div class="buy">
+                                            <?php if (!$reservation_history['reservation_cancelled']) : ?>
+                                                <div class="buy-edit">
+                                                    <span class="cancel-item" data-tableno=<?= $reservation_history['id'] ?>>Cancel</span>
+                                                    <span>
+                                                        <a href="table_reservation.php?t_id=<?= $reservation_history['table_id'] ?>">
+                                                            Edit
+                                                        </a>
+                                                    </span>
+                                                </div>
+                                            <?php else : ?>
+                                                <div class="buy-return">
                                                     <a href="table_reservation.php?t_id=<?= $reservation_history['table_id'] ?>">
-                                                        Edit
+                                                        Book Again
                                                     </a>
-                                                </span>
-                                            </div>
-                                        <?php else : ?>
-                                            <div class="buy-return">
-                                                <a href="table_reservation.php?t_id=<?= $reservation_history['table_id'] ?>">
-                                                    Book Again
-                                                </a>
-                                            </div>
-                                        <?php endif; ?>
-                                    </div>
-                                </td>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
 
+                                </tr>
+
+                            <?php endwhile; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan = "7" style = "text-align: center">No Records Found</td>
                             </tr>
-
-                        <?php endwhile; ?>
+                        <?php endif; ?>
 
 
                     </tbody>
