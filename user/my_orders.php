@@ -56,7 +56,7 @@ include("./header.php");
                                 <tr>
                                     <td>
                                         <div class="img">
-                                            <img src="../assets/images/food.png" alt="Food Image">
+                                            <img src="../assets/images/<?= $ordered_food['primary_img'] ?>" alt="Food Image">
                                         </div>
                                     </td>
                                     <td>
@@ -163,7 +163,7 @@ include("./header.php");
                                 <tr>
                                     <td>
                                         <div class="img">
-                                            <img src="../assets/images/food.png" alt="Food Image">
+                                            <img src="../assets/images/<?= $ordered_food_history['primary_img'] ?>" alt="Food Image">
                                         </div>
                                     </td>
                                     <td>
