@@ -407,14 +407,20 @@ main .menu-list .boxes .box :is(.details, .box-title) {
     gap: 10px;
     padding: 10px 20px;
     margin: 10px 0;
-    /* background-color: #ba42ba; */
     font-size: 20px;
     color: black;
     cursor: pointer;
     scroll-snap-align: center;
+    background-color: #cecece;
+    border-radius: 10px;
 }
 
-.best-categories .boxes .box.active {
+.best-categories .boxes .box.active, .best-categories .boxes .box.active:hover {
+    background-color: #fff;
+    border-radius: 10px;
+}
+
+.best-categories .boxes .box:hover {
     background-color: #f0f0f0;
     border-radius: 10px;
 }
