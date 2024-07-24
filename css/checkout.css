@@ -252,6 +252,15 @@ tfoot td {
     font-size: 20px;
 }
 
+.card .price > i{
+    padding: 5px;
+    color: #fff;
+    background-color: rgb(243, 79, 79);
+    border: 1px solid red;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
 .card button {
     width: 30px;
     height: 30px;
