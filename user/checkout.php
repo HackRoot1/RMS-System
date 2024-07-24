@@ -88,7 +88,7 @@ include("./header.php");
                                 </td>
                                 <td>
                                     <div class="price">
-                                        Remove
+                                        <i class="fa-regular fa-trash-can"></i>
                                     </div>
                                 </td>
                             </tr>
@@ -124,7 +124,7 @@ include("./header.php");
                                 </td>
                                 <td>
                                     <div class="price">
-                                        Remove
+                                        <i class="fa-regular fa-trash-can"></i>
                                     </div>
                                 </td>
                             </tr>
@@ -166,7 +166,7 @@ include("./header.php");
                                     </td>
                                     <td>
                                         <div class="price remove-item" data-id="<?= $item['id'] ?>">
-                                            Remove
+                                            <i class="fa-regular fa-trash-can"></i>
                                         </div>
                                     </td>
                                 </tr>
