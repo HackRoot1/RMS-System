@@ -96,7 +96,7 @@ include("./header.php");
                             <tr>
                                 <td>
                                     <div class="img">
-                                        <img src="../assets/images/food.png" alt="Food Image">
+                                        <img src="../assets/images/<?= $foodDataCart['primary_img'] ?>" alt="Food Image">
                                     </div>
                                 </td>
                                 <td>
@@ -138,7 +138,7 @@ include("./header.php");
                                 <tr>
                                     <td>
                                         <div class="img">
-                                            <img src="../assets/images/food.png" alt="Food Image">
+                                            <img src="../assets/images/<?= $item['primary_img'] ?>" alt="Food Image">
                                         </div>
                                     </td>
                                     <td>
