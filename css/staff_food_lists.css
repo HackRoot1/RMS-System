@@ -181,18 +181,41 @@ table tbody :is(.img, img ){
     height: auto;
 }
 
+table tbody .img {
+    padding: 10px;
+    width: 150px;
+    height: 150px;
+}
+
+table tbody .img img {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgb(127, 127, 127);
+    border-radius: 10px;
+    object-fit: cover;
+}
+
 table tbody .actions > div {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
+    gap: 10px;
 }
 
 table tbody .actions > div > div{
     background-color: rgb(105, 105, 105);
-    padding: 5px 15px;
+    padding: 10px;
     border-radius: 5px;
     color: white;
     cursor: pointer;
+}
+
+table tbody .actions .remove-food-item{
+    background-color: red;
+}
+
+table tbody .actions .add-food{
+    background-color: green;
 }
 
 

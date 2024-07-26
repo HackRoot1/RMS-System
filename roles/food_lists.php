@@ -89,7 +89,7 @@
                             <?php while($data = mysqli_fetch_assoc($food_lists)): ?>
                                 <tr>
                                     <td class = "img">
-                                        <img src="../assets/images/pizza.png" alt="">
+                                        <img src="../assets/images/<?= $data['primary_img'] ?>" alt="Image not found">
                                     </td>
                                     <td><?= $data['food_name'] ?></td>
                                     <td><?= $data['quantity'] ?></td>
@@ -97,8 +97,12 @@
                                     <td><?= $data['discount_percentage'] ?>%</td>
                                     <td class = "actions">
                                         <div>
-                                            <div class = "remove-food-item" data-foodid="<?= $data['id'] ?>" >Remove</div>
-                                            <div class = "add-food" data-editid = "<?= $data['id'] ?>">Edit</div>
+                                            <div class = "remove-food-item" data-foodid="<?= $data['id'] ?>" >
+                                                <i class="fa-regular fa-trash-can"></i>
+                                            </div>
+                                            <div class = "add-food" data-editid = "<?= $data['id'] ?>">
+                                                <i class="fa-regular fa-pen-to-square"></i>
+                                            </div>
                                         </div>
                                     </td>
                                 </tr>
